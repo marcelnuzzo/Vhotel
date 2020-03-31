@@ -58,6 +58,12 @@ class Hotel
      */
     private $updateAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CategoryHotel", inversedBy="hotels")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categoryHotel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -147,6 +153,18 @@ class Hotel
     public function setUpdateAt(\DateTimeInterface $updateAt): self
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getCategoryHotel(): ?CategoryHotel
+    {
+        return $this->categoryHotel;
+    }
+
+    public function setCategoryHotel(?CategoryHotel $categoryHotel): self
+    {
+        $this->categoryHotel = $categoryHotel;
 
         return $this;
     }

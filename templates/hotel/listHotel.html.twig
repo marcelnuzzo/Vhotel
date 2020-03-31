@@ -12,22 +12,24 @@
 <h1 style="text-align:center;background-color:yellow">{{ hotel | length }} hôtel(s)</h1> 
     <div class="row">
         <div class="col-2">
-            <h5><strong>Nom de l'hôtel :</strong></h5>
+            <h5><strong>Nom de l'hôtel</strong></h5>
         </div>
         <div class="col-2">
-            <h5><strong>Adresse :</strong></h5>
+            <h5><strong>Adresse</strong></h5>
         </div>
         <div class="col-2">
-            <h5><strong>description :</strong></h5>
+            <h5><strong>description</strong></h5>
+        </div>
+        <div class="col-1">
+            <h5><strong>Statut</strong></h5>
         </div>
         <div class="col-2">
-            <h5><strong>Statut :</strong></h5>
+            <h5><strong>fichier de l'image</strong></h5>
+        </div><div class="col-1">
+            <h5><strong>Catégorie</strong></h5>
         </div>
         <div class="col-2">
-            <h5><strong>Label image :</strong></h5>
-        </div>
-        <div class="col-2">
-            <h5><strong>Image :</strong></h5>
+            <h5><strong>Image</strong></h5>
         </div>
     </div>
 </div>
@@ -44,11 +46,14 @@
         <div class="col-2">
             <h5>{{ hotel.description }}</h5>
         </div>
-        <div class="col-2">
+        <div class="col-1">
             <h5>{{ hotel.status }}</h5>
         </div>
         <div class="col-2">
             <h5>{{ hotel.imageName }}</h5>
+        </div>
+        <div class="col-1">
+            <h5>{{ hotel.categoryHotel.label }}</h5>
         </div>
         <div class="col-2">
             <img src="{{ vich_uploader_asset(hotel, 'imageFile') }}" alt="{{ hotel.name }}" width="100" height="auto"/>

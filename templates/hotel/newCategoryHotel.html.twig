@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel catégorie d'hôtel{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1>Créer une nouvelle catégorie d'hôtel</h1>
+</div>
+
+{{ form_start(form) }}
+    
+    {{ form_row(form.label, {'attr': {'placeholder': "Nom de la catégorie de l'hôtel"}}) }}
+    
+    <div class=" mx-auto d-block">
+        <button type="submit" class="btn btn-success">Créer catégorie hôtel</button>
+    </div>
+{{ form_end(form) }}
+
+{% endblock %}

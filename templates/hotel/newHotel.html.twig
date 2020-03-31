@@ -10,12 +10,13 @@
 
 {{ form_start(form) }}
     
-    {{ form_row(form.name) }}
-    {{ form_row(form.address) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.status) }}
-    {{ form_row(form.imageName) }}
-    {{ form_row(form.imageFile) }}
+    {{ form_row(form.name, {'attr': {'placeholder': "Nom de l'hôtel"}}) }}
+    {{ form_row(form.address, {'attr': {'placeholder': "Adresse de l'hôtel"}}) }}
+    {{ form_row(form.description, {'attr': {'placeholder': "Description de l'hôtel"}}) }}
+    {{ form_row(form.status, {'attr': {'placeholder': "Status de l'hôtel"}}) }}
+    {{ form_row(form.imageName, {'attr': {'placeholder': "Adresse de l'image de l'hôtel"}}) }}
+    {{ form_row(form.imageFile, {'attr': {'placeholder': "Image de l'hôtel"}}) }}
+    {{ form_row(form.categoryHotel) }}
     
     <div class=" mx-auto d-block">
         <button type="submit" class="btn btn-success">Créer hôtel</button>

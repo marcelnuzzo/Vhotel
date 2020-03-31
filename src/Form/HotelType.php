@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Hotel;
+use App\Entity\CategoryHotel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class HotelType extends AbstractType
 {
@@ -16,9 +19,19 @@ class HotelType extends AbstractType
             ->add('name')
             ->add('address')
             ->add('description')
-            ->add('status')
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'actif' => 'actif',
+                    'supprimé' => 'supprimé',
+                    'en travaux' => 'en travaux',
+                ]
+            ])
             ->add('imageName')
             ->add('imageFile' , VichImageType::class)
+            ->add('categoryHotel', EntityType::class, [
+                'class' => CategoryHotel::class,
+                "choice_label" => 'label'
+            ])
         ;
     }
 
