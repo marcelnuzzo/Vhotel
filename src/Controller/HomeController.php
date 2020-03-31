@@ -9,7 +9,6 @@ class HomeController extends AbstractController {
 
 
     /**
-     * Undocumented function
      * @Route("/", name="homepage")
      * 
      */

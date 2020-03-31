@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste des hôtels{% endblock %}
+
+{% block body %}
+
+<div class = "jumbotron">
+    <h1 style="text-align:center; background-color:cyan; text-decoration:underline">Hôtels</h1>
+</div>  
+
+<div class="container">
+<h1 style="text-align:center;background-color:yellow">{{ hotel | length }} hôtel(s)</h1> 
+    <div class="row">
+        <div class="col-2">
+            <h5><strong>Nom de l'hôtel :</strong></h5>
+        </div>
+        <div class="col-2">
+            <h5><strong>Adresse :</strong></h5>
+        </div>
+        <div class="col-2">
+            <h5><strong>description :</strong></h5>
+        </div>
+        <div class="col-2">
+            <h5><strong>Statut :</strong></h5>
+        </div>
+        <div class="col-2">
+            <h5><strong>Label image :</strong></h5>
+        </div>
+        <div class="col-2">
+            <h5><strong>Image :</strong></h5>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container">
+{% for hotel in hotels %}
+    <div class="row">
+        <div class="col-2">
+            <h5>{{ hotel.name }}</h5>
+        </div>
+        <div class="col-2">
+            <h5>{{ hotel.address }}</h5>
+        </div>
+        <div class="col-2">
+            <h5>{{ hotel.description }}</h5>
+        </div>
+        <div class="col-2">
+            <h5>{{ hotel.status }}</h5>
+        </div>
+        <div class="col-2">
+            <h5>{{ hotel.imageName }}</h5>
+        </div>
+        <div class="col-2">
+            <img src="{{ vich_uploader_asset(hotel, 'imageFile') }}" alt="{{ hotel.name }}" width="100" height="auto"/>
+        </div>
+    </div>
+    <hr>
+{% endfor %}
+</div>
+   
+{% endblock %}

@@ -27,3 +27,20 @@ h1, h2, h3 {
 .fantom {
     text-shadow: 0 0 3px #FF0000;
 }
+
+.btn-success {
+    color: #000000;
+}
+
+.btn-info {
+    background-color: cyan;
+    color: black;
+}
+
+.fa-home {
+    color: white;
+}
+
+ins {
+    margin-left: 0;
+}
