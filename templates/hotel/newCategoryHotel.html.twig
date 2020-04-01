@@ -4,16 +4,28 @@
 
 {% block body %}
 
-<div class = "jumbotron">
-    <h1>Créer une nouvelle catégorie d'hôtel</h1>
-</div>
+{% if editMode %}
+    <div class="jumbotron" style="background-color:orange">
+        <h1>Modification de la catégorie de l'hôtel</h1>
+    </div>                
+{% else %}
+    <div class="jumbotron" style="background-color:cyan">
+        <h1>Création d'une catégorie d'hôtel</h1>
+    </div>
+{% endif %}
 
 {{ form_start(form) }}
     
     {{ form_row(form.label, {'attr': {'placeholder': "Nom de la catégorie de l'hôtel"}}) }}
     
     <div class=" mx-auto d-block">
-        <button type="submit" class="btn btn-success">Créer catégorie hôtel</button>
+        <button type="submit" class="btn btn-success">Créer catégorie hôtel
+            {% if editMode %}
+                Modifier
+            {% else %}
+                Créer
+            {% endif %}
+        </button>
     </div>
 {{ form_end(form) }}
 

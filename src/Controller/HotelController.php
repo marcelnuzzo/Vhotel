@@ -27,10 +27,18 @@ class HotelController extends AbstractController
 
      /**
      * @Route("/hotel/newHotel", name="app_hotel_newHotel")
-     * 
+     * @Route("/hotel/editHotel/{id}", name="app_hotel_editHotel")
      */
     public function formHotel(Hotel $hotel = null, Request $request, EntityManagerInterface $manager)
     {
+        $currentRoute = $request->attributes->get('_route');
+        
+        $route = "hotel/newHotel";
+        if($currentRoute == "app_hotel_newHotel")
+            $route = "hotel/newHotel";
+        else if($currentRoute == "app_hotel_editHotel/{id}")
+            $route = "hotel/editHotel";
+
         if(!$hotel) {
             $hotel = new Hotel();
         }
@@ -40,6 +48,10 @@ class HotelController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             if(!$hotel->getId()) {
                 $hotel->setUpdateAt(new \DateTime());
+                $editMode = 0;
+            }
+            else {
+                $editMode = 1;
             }
            
             $manager->persist($hotel);        
@@ -47,10 +59,26 @@ class HotelController extends AbstractController
 
             return $this->redirectToRoute('hotel_listHotel');
         }
-
-    return $this->render("hotel/newHotel.html.twig", [
+        $html = ".html.twig";
+        return $this->render($route.$html, [
             'form' => $form->createView(),
+            'editMode' => $hotel->getId() !== null
         ]);
+    }
+
+     /**
+     * @Route("/hotel/editHotel/{id}/deleteHotel", name="hotel_deleteHotel")
+     */
+    public function deleteHotel($id, EntityManagerInterface $Manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(Hotel::class);
+        $hotel = $repo->find($id);
+
+        $Manager->remove($hotel);
+        $Manager->flush();
+        
+        return $this->redirectToRoute('hotel_listHotel');
+       
     }
 
      /**
@@ -77,26 +105,58 @@ class HotelController extends AbstractController
 
     /**
      * @Route("/hotel/newCategoryHotel", name="app_hotel_newCategoryHotel")
-     * 
+     * @Route("/hotel/editCategoryHotel/{id}", name="app_hotel_editCategoryHotel")
      */
     public function formCatHotel(CategoryHotel $categoryHotel = null, Request $request, EntityManagerInterface $manager)
     {
+        $currentRoute = $request->attributes->get('_route');
+        
+        $route = "hotel/newCategoryHotel";
+        if($currentRoute == "app_hotel_newCategoryHotel")
+            $route = "hotel/newCategoryHotel";
+        else if($currentRoute == "app_hotel_editCategoryHotel/{id}")
+            $route = "hotel/editCategoryHotel";
+        
         if(!$categoryHotel) {
             $categoryHotel = new CategoryHotel();
         }
         $form = $this->createForm(CategoryHotelType::class, $categoryHotel);
         $form->handleRequest($request);
-            
+       
         if($form->isSubmitted() && $form->isValid()) {
-           
+            
+            if($categoryHotel->getId() == null) {
+                $editMode = 0;      
+            }
+            else {
+                $editMode = 1;
+            }
+            
             $manager->persist($categoryHotel);        
             $manager->flush();
 
             return $this->redirectToRoute('hotel_listCategoryHotel');
         }
-
-    return $this->render("hotel/newCategoryHotel.html.twig", [
+        
+        $html = ".html.twig";
+        return $this->render($route.$html, [
             'form' => $form->createView(),
+            'editMode' => $categoryHotel->getId() !== null
         ]);
+    }
+
+     /**
+     * @Route("/hotel/editCategoryHotel/{id}/deleteCategoryHotel", name="hotel_deleteCategoryHotel")
+     */
+    public function deleteCatHotel($id, EntityManagerInterface $Manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(CategoryHotel::class);
+        $categoryHotel = $repo->find($id);
+
+        $Manager->remove($categoryHotel);
+        $Manager->flush();
+        
+        return $this->redirectToRoute('hotel_listCategoryHotel');
+       
     }
 }

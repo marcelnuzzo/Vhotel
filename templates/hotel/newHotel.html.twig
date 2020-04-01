@@ -1,26 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel hôtel{% endblock %}
+{% block title %}Hôtel{% endblock %}
 
 {% block body %}
 
-<div class = "jumbotron">
-    <h1>Créer un nouvel hôtel</h1>
-</div>
-
-{{ form_start(form) }}
-    
-    {{ form_row(form.name, {'attr': {'placeholder': "Nom de l'hôtel"}}) }}
-    {{ form_row(form.address, {'attr': {'placeholder': "Adresse de l'hôtel"}}) }}
-    {{ form_row(form.description, {'attr': {'placeholder': "Description de l'hôtel"}}) }}
-    {{ form_row(form.status, {'attr': {'placeholder': "Status de l'hôtel"}}) }}
-    {{ form_row(form.imageName, {'attr': {'placeholder': "Adresse de l'image de l'hôtel"}}) }}
-    {{ form_row(form.imageFile, {'attr': {'placeholder': "Image de l'hôtel"}}) }}
-    {{ form_row(form.categoryHotel) }}
-    
-    <div class=" mx-auto d-block">
-        <button type="submit" class="btn btn-success">Créer hôtel</button>
+{% if editMode %}
+    <div class="jumbotron" style="background-color:orange">
+        <h1>Modification de l'hôtel</h1>
+    </div>                
+{% else %}
+    <div class="jumbotron" style="background-color:cyan">
+        <h1>Création d'un hôtel</h1>
     </div>
-{{ form_end(form) }}
+{% endif %}
 
+    {{ form_start(form) }}
+<div class="container">
+    <div class="row">
+        <div class="col">
+    
+        {{ form_row(form.name) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.status) }}
+        {{ form_row(form.imageName) }}
+        {{ form_row(form.categoryHotel) }}
+        </div>
+        <div class="col">
+
+        {{ form_row(form.imageFile) }}
+    
+            <div class=" mx-auto d-block mt-3">
+                <button type="submit" class="btn btn-success">
+                    {% if editMode %}
+                        Modifier
+                    {% else %}
+                        Créer
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}
+</div>
 {% endblock %}

@@ -7,60 +7,30 @@
 <div class = "jumbotron">
     <h1 style="text-align:center; background-color:cyan; text-decoration:underline">Hôtels</h1>
 </div>  
-
-<div class="container">
-<h1 style="text-align:center;background-color:yellow">{{ hotel | length }} hôtel(s)</h1> 
-    <div class="row">
-        <div class="col-2">
-            <h5><strong>Nom de l'hôtel</strong></h5>
-        </div>
-        <div class="col-2">
-            <h5><strong>Adresse</strong></h5>
-        </div>
-        <div class="col-2">
-            <h5><strong>description</strong></h5>
-        </div>
-        <div class="col-1">
-            <h5><strong>Statut</strong></h5>
-        </div>
-        <div class="col-2">
-            <h5><strong>fichier de l'image</strong></h5>
-        </div><div class="col-1">
-            <h5><strong>Catégorie</strong></h5>
-        </div>
-        <div class="col-2">
-            <h5><strong>Image</strong></h5>
-        </div>
-    </div>
-</div>
+<a class="btn btn-warning" style="color:white" href="{{ path('app_hotel_newHotel') }}" role="button" >Créer</a>
 <hr>
-<div class="container">
-{% for hotel in hotels %}
-    <div class="row">
-        <div class="col-2">
-            <h5>{{ hotel.name }}</h5>
-        </div>
-        <div class="col-2">
-            <h5>{{ hotel.address }}</h5>
-        </div>
-        <div class="col-2">
-            <h5>{{ hotel.description }}</h5>
-        </div>
-        <div class="col-1">
-            <h5>{{ hotel.status }}</h5>
-        </div>
-        <div class="col-2">
-            <h5>{{ hotel.imageName }}</h5>
-        </div>
-        <div class="col-1">
-            <h5>{{ hotel.categoryHotel.label }}</h5>
-        </div>
-        <div class="col-2">
-            <img src="{{ vich_uploader_asset(hotel, 'imageFile') }}" alt="{{ hotel.name }}" width="100" height="auto"/>
-        </div>
-    </div>
-    <hr>
-{% endfor %}
-</div>
-   
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>Nom de l'hôtel</th>
+        <th>Adresse</th>
+        <th>Description</th>
+        <th>Statut</th>
+        <th>fichier de l'image</th>
+        <th>Catégorie</th>
+        <th>Image</th>
+    </tr>
+    {%for hotel in hotels %}
+        <tr>
+            <td>{{ hotel.name }}</td>
+            <td>{{ hotel.address }}</td>
+            <td>{{ hotel.description }}</td>
+            <td>{{ hotel.status }}</td>
+            <td>{{ hotel.imageName }}</td>
+            <td>{{ hotel.categoryHotel.label }}</td>
+            <td><img src="{{ vich_uploader_asset(hotel, 'imageFile') }}" alt="{{ hotel.name }}" width="100" height="auto"/></td>
+            <td><a class="btn btn-info" style="color:white" href="{{ path('app_hotel_editHotel', {'id':hotel.id}) }}" role="button" >Modifier</a></td>
+            <td><a class="btn btn-danger" style="color:white" href="{{ path('hotel_deleteHotel', {'id':hotel.id}) }} " role="button" >Supprimer</a></td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}
