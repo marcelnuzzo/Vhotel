@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Hotel;
 use App\Form\HotelType;
+use App\Entity\CategoryRoom;
 use App\Entity\CategoryHotel;
+use App\Form\CategoryRoomType;
 use App\Form\CategoryHotelType;
 use App\Repository\HotelRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CategoryRoomRepository;
 use App\Repository\CategoryHotelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -159,4 +162,73 @@ class HotelController extends AbstractController
         return $this->redirectToRoute('hotel_listCategoryHotel');
        
     }
+
+     /**
+     * @Route("/hotel/lisCategorytRoom", name="hotel_listCategoryRoom")
+     */
+    public function listCatRoom(CategoryRoomRepository $categoryRoomRepository)
+    {
+        return $this->render('hotel/listCategoryRoom.html.twig', [
+            'categoryRoom'=> $categoryRoomRepository->findAll(),
+            'categoryRooms' => $categoryRoomRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/hotel/newCategoryRoom", name="app_hotel_newCategoryRoom")
+     * @Route("/hotel/editCategoryRoom/{id}", name="app_hotel_editCategoryRoom")
+     */
+    public function formCatRoom(CategoryRoom $categoryRoom = null, Request $request, EntityManagerInterface $manager)
+    {
+        $currentRoute = $request->attributes->get('_route');
+        
+        $route = "hotel/newCategoryRoom";
+        if($currentRoute == "app_hotel_newCategoryRoom")
+            $route = "hotel/newCategoryRoom";
+        else if($currentRoute == "app_hotel_editCategoryRoom/{id}")
+            $route = "hotel/editCategoryRoom";
+        
+        if(!$categoryRoom) {
+            $categoryRoom = new CategoryRoom();
+        }
+        $form = $this->createForm(CategoryRoomType::class, $categoryRoom);
+        $form->handleRequest($request);
+       
+        if($form->isSubmitted() && $form->isValid()) {
+            
+            if($categoryRoom->getId() == null) {
+                $editMode = 0;      
+            }
+            else {
+                $editMode = 1;
+            }
+            
+            $manager->persist($categoryRoom);        
+            $manager->flush();
+
+            return $this->redirectToRoute('hotel_listCategoryRoom');
+        }
+        
+        $html = ".html.twig";
+        return $this->render($route.$html, [
+            'form' => $form->createView(),
+            'editMode' => $categoryRoom->getId() !== null
+        ]);
+    }
+
+    /**
+     * @Route("/hotel/editCategoryRoom/{id}/deleteCategoryRoom", name="hotel_deleteCategoryRoom")
+     */
+    public function deleteCatRoom($id, EntityManagerInterface $Manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(CategoryRoom::class);
+        $categoryRoom = $repo->find($id);
+
+        $Manager->remove($categoryRoom);
+        $Manager->flush();
+        
+        return $this->redirectToRoute('hotel_listCategoryRoom');
+       
+    }
+    
 }

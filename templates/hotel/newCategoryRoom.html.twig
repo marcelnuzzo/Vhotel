@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel catégorie d'hôtel{% endblock %}
+{% block title %}Nouvel catégorie de chambre{% endblock %}
 
 {% block body %}
 
 {% if editMode %}
     <div class="jumbotron" style="background-color:orange">
-        <h1>Modification de la catégorie de l'hôtel</h1>
+        <h1>Modification de la catégorie de la chambre</h1>
     </div>                
 {% else %}
     <div class="jumbotron" style="background-color:cyan">
-        <h1>Création d'une catégorie d'hôtel</h1>
+        <h1>Création d'une catégorie de chambre</h1>
     </div>
 {% endif %}
 
 {{ form_start(form) }}
     
-    {{ form_row(form.label, {'attr': {'placeholder': "Nom de la catégorie de l'hôtel"}}) }}
+    {{ form_row(form.label, {'attr': {'placeholder': "Nom de la catégorie de la chambre"}}) }}
     
     <div class=" mx-auto d-block">
         <button type="submit" class="btn btn-success">
