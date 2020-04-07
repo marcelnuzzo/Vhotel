@@ -4,18 +4,37 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\Image;
+use App\Entity\User;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder) {
+        $this->encoder = $encoder;
+    }
+    
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('FR-fr');
         $indiceImage = 200;
         $indiceImage2 = 240;
+
+        $users = [];
+        $user = new User();
+        $hash = $this->encoder->encodePassword($user, '1234');
+        $user->setFirstname('Marcel')
+             ->setLastname('Nuzzo')
+             ->setEmail('nuzzo.marcel@aliceadsl.fr')
+             ->setHash($hash)
+             ->setPicture('https://media-exp2.licdn.com/dms/image/C4D03AQE3QULMB7Cksg/profile-displayphoto-shrink_100_100/0?e=1585180800&v=beta&t=aXcjYkUfUrLIoxIIoI-fDBM7ER8b_H8R_E2k4fDXAPo');
+
+        $manager->persist($user);
+        $users[] = $user;
 
         for ($i=1; $i<=30; $i++) {
             $ad = new Ad();

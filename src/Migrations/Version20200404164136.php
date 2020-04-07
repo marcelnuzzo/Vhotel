@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200402075029 extends AbstractMigration
+final class Version20200404164136 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -28,6 +28,7 @@ final class Version20200402075029 extends AbstractMigration
         $this->addSql('CREATE TABLE hotel (id INT AUTO_INCREMENT NOT NULL, category_hotel_id INT NOT NULL, name VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, status VARCHAR(255) NOT NULL, image_name VARCHAR(255) NOT NULL, update_at DATETIME NOT NULL, INDEX IDX_3535ED985393F63 (category_hotel_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE image (id INT AUTO_INCREMENT NOT NULL, ad_id INT NOT NULL, url VARCHAR(255) NOT NULL, caption VARCHAR(255) NOT NULL, INDEX IDX_C53D045F4F34D596 (ad_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE room (id INT AUTO_INCREMENT NOT NULL, category_room_id INT NOT NULL, number INT NOT NULL, area INT NOT NULL, description LONGTEXT NOT NULL, status VARCHAR(255) NOT NULL, image_name VARCHAR(255) NOT NULL, update_at DATETIME NOT NULL, INDEX IDX_729F519B93CF30ED (category_room_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, picture VARCHAR(255) DEFAULT NULL, hash VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE hotel ADD CONSTRAINT FK_3535ED985393F63 FOREIGN KEY (category_hotel_id) REFERENCES category_hotel (id)');
         $this->addSql('ALTER TABLE image ADD CONSTRAINT FK_C53D045F4F34D596 FOREIGN KEY (ad_id) REFERENCES ad (id)');
         $this->addSql('ALTER TABLE room ADD CONSTRAINT FK_729F519B93CF30ED FOREIGN KEY (category_room_id) REFERENCES category_room (id)');
@@ -47,5 +48,6 @@ final class Version20200402075029 extends AbstractMigration
         $this->addSql('DROP TABLE hotel');
         $this->addSql('DROP TABLE image');
         $this->addSql('DROP TABLE room');
+        $this->addSql('DROP TABLE user');
     }
 }
