@@ -4,22 +4,25 @@
 
 {% block body %}
 
-<div class = "jumbotron" style="background-color:#FEF9F9">
-    <h1>Catégories d'hôtels</h1>
-</div>  
-<a class="btn btn-warning" style="color:white" href="{{ path('app_hotel_newCategoryHotel') }}" role="button" >Créer</a>
-<hr>
-<table class="table table-striped table-bordered table-hover">
-    <tr>
-        <th>Nom de la catégorie de l'hôtel</th>
-    </tr>
-    {%for categoryHotel in categoryHotels %}
+<div class="container">
+    <div class = "jumbotron" style="background-color:#FEF9F9">
+        <h1>Catégories d'hôtels</h1>
+        <h2>{{ categoryHotel | length }} catégorie(s).</h2>
+    </div>  
+    <a class="btn btn-warning" style="color:white" href="{{ path('app_hotel_newCategoryHotel') }}" role="button" >Créer</a>
+    <hr>
+    <table class="table table-striped table-bordered table-hover">
         <tr>
-            <td>{{ categoryHotel.label }}</td>
-            <td><a class="btn btn-info" style="color:white" href="{{ path('app_hotel_editCategoryHotel', {'id':categoryHotel.id}) }}" role="button" >Modifier</a></td>
-            <td><a class="btn btn-danger" style="color:white" href="{{ path('hotel_deleteCategoryHotel', {'id':categoryHotel.id}) }} " role="button" >Supprimer</a></td>
+            <th>Nom de la catégorie de l'hôtel</th>
         </tr>
-    {% endfor %}
-</table>
+        {%for categoryHotel in categoryHotels %}
+            <tr>
+                <td>{{ categoryHotel.label }}</td>
+                <td><a class="btn btn-info" style="color:white" href="{{ path('app_hotel_editCategoryHotel', {'id':categoryHotel.id}) }}" role="button" >Modifier</a></td>
+                <td><a class="btn btn-danger" style="color:white" href="{{ path('hotel_deleteCategoryHotel', {'id':categoryHotel.id}) }} " role="button" >Supprimer</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
 
 {% endblock %}

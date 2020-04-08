@@ -29,6 +29,9 @@
                             {{ ad.introduction }}
                         </p>
                         <a href="{{ url }}" class="btn btn-primary">En savoir plus</a>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path("ads_edit", {'slug': ad.slug}) }}" class="btn btn-secondary">Modifier l'annonce</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

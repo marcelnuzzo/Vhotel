@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\Image;
+use App\Entity\Role;
 use App\Entity\User;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -20,6 +21,19 @@ class AppFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstname('Marcel')
+                  ->setLastname('Nuzzo')
+                  ->setEmail('nuzzo.marcel@aliceadsl.fr')
+                  ->setPicture('https://lh3.googleusercontent.com/a-/AOh14Giy3pomEF4DFzKVvYb03_ATPsjRYypTILMxlnD_=s60-cc-rg')
+                  ->setHash($this->encoder->encodePassword($adminUser, '1234'))
+                  ->addUserRole($adminRole);
+        $manager->persist($adminUser);
+
         $faker = Factory::create('FR-fr');
         $indiceImage = 200;
         $indiceImage2 = 240;
@@ -31,7 +45,7 @@ class AppFixtures extends Fixture
              ->setLastname('Nuzzo')
              ->setEmail('nuzzo.marcel@aliceadsl.fr')
              ->setHash($hash)
-             ->setPicture('https://media-exp2.licdn.com/dms/image/C4D03AQE3QULMB7Cksg/profile-displayphoto-shrink_100_100/0?e=1585180800&v=beta&t=aXcjYkUfUrLIoxIIoI-fDBM7ER8b_H8R_E2k4fDXAPo');
+             ->setPicture('https://lh3.googleusercontent.com/a-/AOh14Giy3pomEF4DFzKVvYb03_ATPsjRYypTILMxlnD_=s60-cc-rg');
 
         $manager->persist($user);
         $users[] = $user;
