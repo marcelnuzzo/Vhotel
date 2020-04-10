@@ -32,6 +32,9 @@ h1, h2 {
 
 .btn {
     border-radius: 20px;
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 1.5em;
 }
 
 .btncolor {
@@ -84,4 +87,8 @@ footer {
 .avatar-mini {
     max-width: 24px;
     max-height: 24px;
+}
+
+.alert {
+    text-align: center;
 }

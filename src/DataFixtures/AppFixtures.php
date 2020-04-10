@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ad;
+use App\Entity\Booking;
 use App\Entity\Image;
 use App\Entity\Role;
 use App\Entity\User;
@@ -26,8 +27,8 @@ class AppFixtures extends Fixture
         $manager->persist($adminRole);
 
         $adminUser = new User();
-        $adminUser->setFirstname('Marcel')
-                  ->setLastname('Nuzzo')
+        $adminUser->setFirstname('marcel')
+                  ->setLastname('nuzzo')
                   ->setEmail('nuzzo.marcel@aliceadsl.fr')
                   ->setPicture('https://lh3.googleusercontent.com/a-/AOh14Giy3pomEF4DFzKVvYb03_ATPsjRYypTILMxlnD_=s60-cc-rg')
                   ->setHash($this->encoder->encodePassword($adminUser, '1234'))
@@ -41,9 +42,9 @@ class AppFixtures extends Fixture
         $users = [];
         $user = new User();
         $hash = $this->encoder->encodePassword($user, '1234');
-        $user->setFirstname('Marcel')
-             ->setLastname('Nuzzo')
-             ->setEmail('nuzzo.marcel@aliceadsl.fr')
+        $user->setFirstname('toto')
+             ->setLastname('smith')
+             ->setEmail('toto.smith@gmail.com')
              ->setHash($hash)
              ->setPicture('https://lh3.googleusercontent.com/a-/AOh14Giy3pomEF4DFzKVvYb03_ATPsjRYypTILMxlnD_=s60-cc-rg');
 
@@ -77,7 +78,29 @@ class AppFixtures extends Fixture
 
                 $manager->persist($image);
 
-            }    
+            } 
+            
+            // gestion des réservations
+            for($j = 1; $j <= mt_rand(0, 10); $j++) {
+                $booking = new Booking();
+                $createdAt = $faker->dateTimeBetween('-6 months');
+                $startDate = $faker->dateTimeBetween('-3 months');
+                $duration = mt_rand(3, 10);
+
+                $endDate = (clone $startDate)->modify("+$duration days");
+                $amount = $ad->getPrice() * $duration;
+                $booker = $users[mt_rand(0, count($users) -1)];
+                $comment = $faker->paragraph();
+                $booking->setBooker($booker)
+                        ->setAd($ad)
+                        ->setStartDate($startDate)
+                        ->setEndDate($endDate)
+                        ->setCreatedAt($createdAt)
+                        ->setAmount($amount)
+                        ->setComment($comment);
+
+                    $manager->persist($booking);
+            }
 
             $manager->persist($ad);
 
