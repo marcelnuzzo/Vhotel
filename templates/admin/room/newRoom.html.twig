@@ -1,16 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
-{% block title %}Hôtel{% endblock %}
+{% block title %}Chambre{% endblock %}
 
 {% block body %}
 
 {% if editMode %}
     <div class="jumbotron" style="background-color:orange">
-        <h1>Modification de l'hôtel</h1>
+        <h1>Modification de la chambre</h1>
     </div>                
 {% else %}
     <div class="jumbotron" style="background-color:cyan">
-        <h1>Création d'un hôtel</h1>
+        <h1>Création d'une chambre</h1>
     </div>
 {% endif %}
 
@@ -19,14 +19,15 @@
     <div class="row">
         <div class="col">
     
-        {{ form_row(form.name) }}
-        {{ form_row(form.address) }}
+        {{ form_row(form.number) }}
+        {{ form_row(form.area) }}
         {{ form_row(form.description) }}
         {{ form_row(form.status) }}
-        {{ form_row(form.categoryHotel) }}
+        {{ form_row(form.imageName) }}
+        {{ form_row(form.categoryRoom) }}
         </div>
         <div class="col">
-        {{ form_row(form.imageName) }}
+
         {{ form_row(form.imageFile) }}
     
             <div class=" mx-auto d-block mt-3">

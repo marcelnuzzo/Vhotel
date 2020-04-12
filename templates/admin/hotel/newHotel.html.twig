@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Hôtel{% endblock %}
 
@@ -23,10 +23,11 @@
         {{ form_row(form.address) }}
         {{ form_row(form.description) }}
         {{ form_row(form.status) }}
+        {{ form_row(form.imageName) }}
         {{ form_row(form.categoryHotel) }}
         </div>
         <div class="col">
-        {{ form_row(form.imageName) }}
+
         {{ form_row(form.imageFile) }}
     
             <div class=" mx-auto d-block mt-3">

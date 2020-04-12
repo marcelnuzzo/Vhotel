@@ -1,4 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" role="navigation">
+<style>
+    .fa-home {
+    color: white;
+}
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
     <div>
         <a href="\"><i class="fa fa-home fa-3x" aria-hidden="true"></i></a>
     </div>
@@ -13,18 +18,6 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path("ads_index") }}">Annonces</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("hotel_listHotel") }}">Liste hôtels</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("hotel_listCategoryHotel") }}">Liste catégories hôtels</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Liste chambres</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("hotel_listCategoryRoom") }}">Liste catégories chambres</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -47,6 +40,7 @@
                         <a href="{{ path("ads_create") }}" class="dropdown-item">Créer une annonce</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ path('account_index') }}" class="dropdown-item">Mon compte</a>
+                        <a href="{{ path("account_bookings") }}" class="dropdown-item">Mes réservations</a>
                         <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ path('account_logout') }}" class="dropdown-item">Déconnexion</a>
@@ -58,6 +52,11 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ path('account_login') }}" class="nav-link">Connexion</a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="nav-item">
+                    <a href="{{ path("admin_index") }}" class="nav-link">Admin</a>
                 </li>
             {% endif %}
         </ul>

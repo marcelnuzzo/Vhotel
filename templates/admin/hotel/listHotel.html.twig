@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}liste des hôtels{% endblock %}
 
@@ -7,6 +7,7 @@
     <div class = "jumbotron" style="background-color:#FEF9F9">
         <h1>Hôtels</h1>
     </div>  
+    <a class="btn btn-warning" style="color:white" href="{{ path('app_admin_hotel_newHotel') }}" role="button" >Créer</a>
     <table class="table table-striped table-bordered table-hover">
         <tr>
             <th>Nom de l'hôtel</th>
@@ -26,11 +27,10 @@
                 <td>{{ hotel.imageName }}</td>
                 <td>{{ hotel.categoryHotel.label }}</td>
                 <td><img src="{{ vich_uploader_asset(hotel, 'imageFile') }}" alt="{{ hotel.name }}" width="100" height="auto"/></td>
-                <td><a class="btn btn-info" style="color:white" href="{{ path('app_hotel_editHotel', {'id':hotel.id}) }}" role="button" >Modifier</a></td>
-                <td><a class="btn btn-danger" style="color:white" href="{{ path('hotel_deleteHotel', {'id':hotel.id}) }} " role="button" >Supprimer</a></td>
+                <td><a class="btn btn-info" style="color:white" href="{{ path('app_admin_hotel_editHotel', {'id':hotel.id}) }}" role="button" >Modifier</a></td>
+                <td><a class="btn btn-danger" style="color:white" href="{{ path('admin_hotel_deleteHotel', {'id':hotel.id}) }} " role="button" >Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>
-    <a class="btn btn-warning" style="color:white" href="{{ path('app_hotel_newHotel') }}" role="button" >Créer</a>
 </div>
 {% endblock %}

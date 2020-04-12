@@ -51,26 +51,12 @@ h1, h2 {
     color: white;
 }
 
-.btn-info {
-    background-color: cyan;
-    color: black;
-}
-
 .btn-primary {
     background-color: #05A1F7;
 }
 
-.fa-home {
-    color: white;
-}
-
 ins {
     margin-left: 0;
-}
-
-footer {
-    background-color: black;
-    margin-bottom: 0;
 }
 
 .avatar {
@@ -91,4 +77,8 @@ footer {
 
 .alert {
     text-align: center;
+}
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    color: firebrick;
 }

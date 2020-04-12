@@ -94,6 +94,27 @@ class Ad
         }
     }
 
+    /**
+     * Permet d'obtenir un tableau des jours qui ne sont pas disponibles
+     *
+     * @return array
+     */
+    public function getNotAvailableDays() {
+        $notAvailableDays = [];
+        foreach($this->bookings as $booking) {
+            $resultat = range(
+                $booking->getStartDate()->getTimestamp(),
+                $booking->getEndDate()->getTimestamp(),
+                24*60*60
+            );
+            $days = array_map(function($dayTimestamp){
+                return new \DateTime(date('Y-m-d', $dayTimestamp));
+            }, $resultat);
+            $notAvailableDays = array_merge($notAvailableDays, $days);
+        }
+        return $notAvailableDays;
+    }
+
    
     public function getId(): ?int
     {

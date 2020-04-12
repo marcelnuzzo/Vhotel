@@ -2,15 +2,14 @@
 <html lang="fr">
     <head role="header">
         <meta charset="UTF-8">
-        <title>ViveHotel - {% block title %}Welcome!{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">        
-        {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>#}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        {% block stylesheets %}
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <title>ViveHotel - {% block title %}Welcome!{% endblock %}</title>  
+        {% block stylesheets %}{% endblock %}     
         <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         {#<link rel="stylesheet" href="/css/main.css">#}
         <link rel="stylesheet" href="/css/app.css">
-        {% endblock %}
+        
     </head>
     <body>
             {% include "admin/partials/header.html.twig" %}

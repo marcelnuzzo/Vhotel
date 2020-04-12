@@ -1,4 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-warning" role="navigation">
+<style>
+    .dropdown-menu {
+        background-color: cyan;
+        color: black;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
     <div>
         <a href="\"><i class="fa fa-home fa-3x" aria-hidden="true"></i></a>
     </div>
@@ -10,7 +16,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fa fa-chart"></i>Dashboard
+                    <i class="fa fa-area-chart"></i>Dashboard
                 </a>
             </li>
             <li class="nav-item">
@@ -23,42 +29,51 @@
                     <i class="fa fa-users"></i>Utilisateurs
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("hotel_listHotel") }}">Liste hôtels</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("hotel_listCategoryHotel") }}">Liste catégories hôtels</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Liste chambres</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("hotel_listCategoryRoom") }}">Liste catégories chambres</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Chambres et catégories</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path("admin_hotel_listCategoryHotel") }}">
+                        <i class="fa fa-bed"></i>&nbsp;  Liste catégories hôtels
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path("admin_hotel_listHotel") }}">
+                        <i class="fa fa-bed"></i>&nbsp;  Liste hôtels
+                    </a>
+                </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Chambres et catégories</a>
                 <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+                    <a class="dropdown-item" href="{{ path("admin_room_listRoom") }} ">
+                        <i class="fa fa-bed"></i>&nbsp;  Liste chambres
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path("admin_room_listCategoryRoom") }}">
+                        <i class="fa fa-bed"></i>&nbsp;  Liste catégories
+                    </a>
                 </div>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+            <!--
             <li class="nav-item">
                 <a href="{{ path("homepage") }}" target="_blank" class="nav-link">
                     <i class="fa fa-eye"></i>Voir le site
                 </a>
             </li>
+            -->
             {% if app.user %}
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDopdownLink">
                         <img src="{{ app.user.picture }}" class="avatar avatar-mini" alt="Avatar de {{app.user.firstname}} {{app.user.lastname}}"> {{app.user.firstname}} {{app.user.lastname}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-rigth" aria-labelledby="accountDopdownLink">
-                        <a href="{{ path('admin_account_logout') }}" class="dropdown-item">Déconnexion</a>
+                        <a href="{{ path('admin_account_logout') }}" class="dropdown-item">
+                            <i class="fa fa-unlock"></i> Déconnexion
+                        </a>
+                        <a class="dropdown-item" href="{{ path("homepage") }}" target="_blank">
+                            <i class="fa fa-eye"></i> Voir le site
+                        </a>
                     </div>
                 </li>
             {% endif %}
