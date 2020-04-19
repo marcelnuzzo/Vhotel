@@ -146,7 +146,7 @@ class User implements UserInterface
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
@@ -184,7 +184,7 @@ class User implements UserInterface
         })->toArray();
         $roles[] = 'ROLE_USER';
         
-        return $roles;
+        return array_unique($roles);
     }
 
     public function getPassword() {

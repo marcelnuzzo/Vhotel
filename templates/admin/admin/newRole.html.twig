@@ -1,0 +1,37 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Roles{% endblock %}
+
+{% block body %}
+
+{% if editMode %}
+    <div class="jumbotron" style="background-color:orange">
+        <h1>Modification du role</h1>
+    </div>                
+{% else %}
+    <div class="jumbotron" style="background-color:cyan">
+        <h1>Création d'un role</h1>
+    </div>
+{% endif %}
+
+<div class="container">
+    {{ form_start(form) }}
+    {#
+    {{ form_widget(form) }}
+    #}
+    {{ form_row(form.title, {'attr': {'placeholder': "Nom du role"}}) }}
+    {#
+    {{ form_row(form.users) }}
+    #}
+        <div class=" mx-auto d-block mt-3">
+                <button type="submit" class="btn btn-success">
+                    {% if editMode %}
+                        Modifier
+                    {% else %}
+                        Créer
+                    {% endif %}
+                </button>
+            </div>
+{{ form_end(form) }}
+</div>
+{% endblock %}

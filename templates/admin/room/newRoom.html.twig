@@ -23,13 +23,14 @@
         {{ form_row(form.area) }}
         {{ form_row(form.description) }}
         {{ form_row(form.status) }}
-        {{ form_row(form.imageName) }}
-        {{ form_row(form.categoryRoom) }}
+        {{ form_row(form.price) }}
         </div>
         <div class="col">
-
+        {{ form_row(form.imageName) }}
         {{ form_row(form.imageFile) }}
-    
+        {{ form_row(form.categoryRoom) }}
+        {{ form_row(form.typelit) }}
+        {{ form_row(form.hotel) }}
             <div class=" mx-auto d-block mt-3">
                 <button type="submit" class="btn btn-success">
                     {% if editMode %}

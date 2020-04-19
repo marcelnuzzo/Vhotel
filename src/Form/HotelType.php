@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Hotel;
 use App\Entity\CategoryHotel;
+use App\Entity\Room;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;

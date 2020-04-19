@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookingController extends AbstractController
 {
-    /**
+        /**
      * @Route("/ads/{slug}/book", name="booking_create")
      * @IsGranted("ROLE_USER")
      */
@@ -22,23 +22,29 @@ class BookingController extends AbstractController
     {
         $booking = new Booking();
         $form = $this->createForm(BookingType::class, $booking);
+
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
+
             $booking->setBooker($user)
                     ->setAd($ad);
 
+            // Si les dates ne sont pas disponibles, message d'erreur
             if(!$booking->isBookableDates()) {
                 $this->addFlash(
                     'warning',
-                    "Les dates choisies ne sont pas disponibles"
+                    "Les dates que vous avez choisi ne peuvent être réservées : elles sont déjà prises."
                 );
             } else {
-                $manager->persist($booking);
-                $manager->flush();
+            // Sinon enregistrement et redirection
+            $manager->persist($booking);
+            $manager->flush();
 
-                return $this->redirectToRoute('booking_show', ['id' => $booking->getId(), 'withAlert' => true]);
-            }         
+            return $this->redirectToRoute('booking_show', ['id' => $booking->getId(),
+                'withAlert' => true]);
+            }
         }
 
         return $this->render('booking/book.html.twig', [

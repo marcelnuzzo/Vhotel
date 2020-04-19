@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -63,6 +65,17 @@ class Hotel
      * @ORM\JoinColumn(nullable=false)
      */
     private $categoryHotel;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="hotel")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $room;
+
+    public function __construct()
+    {
+        $this->room = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,6 +178,37 @@ class Hotel
     public function setCategoryHotel(?CategoryHotel $categoryHotel): self
     {
         $this->categoryHotel = $categoryHotel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRoom(): Collection
+    {
+        return $this->room;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->room->contains($room)) {
+            $this->room[] = $room;
+            $room->setHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->room->contains($room)) {
+            $this->room->removeElement($room);
+            // set the owning side to null (unless already changed)
+            if ($room->getHotel() === $this) {
+                $room->setHotel(null);
+            }
+        }
 
         return $this;
     }

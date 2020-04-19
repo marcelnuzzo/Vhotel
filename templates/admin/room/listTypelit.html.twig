@@ -1,0 +1,27 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}liste des types de lit{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class = "jumbotron" style="background-color:#FEF9F9">
+        <h1>Type de lit de la chambre</h1>
+        <h2>{{ typelit | length }} tpye(s).</h2>
+    </div>  
+    <a class="btn btn-warning" style="color:white" href="{{ path('app_admin_room_newTypelit') }}" role="button" >Créer</a>
+    <table class="table table-striped table-bordered table-hover mt-3">
+        <tr>
+            <th>Nom du type de lit</th>
+        </tr>
+        {%for typelit in typelits %}
+            <tr>
+                <td>{{ typelit.label }}</td>
+                <td><a class="btn btn-info" style="color:white" href="{{ path('app_admin_room_editTypelit', {'id':typelit.id}) }}" role="button" >Modifier</a></td>
+                <td><a class="btn btn-danger" style="color:white" href="{{ path('admin_room_deleteTypelit', {'id':typelit.id}) }} " role="button" >Supprimer</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

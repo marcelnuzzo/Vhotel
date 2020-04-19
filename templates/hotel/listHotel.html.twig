@@ -5,32 +5,33 @@
 {% block body %}
 <div class="container">
     <div class = "jumbotron" style="background-color:#FEF9F9">
-        <h1>Hôtels</h1>
+        <h1><mark>Hôtels</mark></h1>
     </div>  
     <table class="table table-striped table-bordered table-hover">
         <tr>
             <th>Nom de l'hôtel</th>
             <th>Adresse</th>
             <th>Description</th>
-            <th>Statut</th>
-            <th>fichier de l'image</th>
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <th>Statut</th>
+                <th>fichier de l'image</th>
+            {% endif %}
             <th>Catégorie</th>
             <th>Image</th>
         </tr>
-        {%for hotel in hotels %}
+        {%for hotel in hotel %}
             <tr>
                 <td>{{ hotel.name }}</td>
                 <td>{{ hotel.address }}</td>
                 <td>{{ hotel.description }}</td>
-                <td>{{ hotel.status }}</td>
-                <td>{{ hotel.imageName }}</td>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <td>{{ hotel.status }}</td>
+                    <td>{{ hotel.imageName }}</td>
+                {% endif %}
                 <td>{{ hotel.categoryHotel.label }}</td>
                 <td><img src="{{ vich_uploader_asset(hotel, 'imageFile') }}" alt="{{ hotel.name }}" width="100" height="auto"/></td>
-                <td><a class="btn btn-info" style="color:white" href="{{ path('app_hotel_editHotel', {'id':hotel.id}) }}" role="button" >Modifier</a></td>
-                <td><a class="btn btn-danger" style="color:white" href="{{ path('hotel_deleteHotel', {'id':hotel.id}) }} " role="button" >Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>
-    <a class="btn btn-warning" style="color:white" href="{{ path('app_hotel_newHotel') }}" role="button" >Créer</a>
 </div>
 {% endblock %}

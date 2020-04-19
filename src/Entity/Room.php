@@ -64,6 +64,23 @@ class Room
      */
     private $categoryRoom;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Typelit", inversedBy="rooms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $typelit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hotel", inversedBy="room")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $hotel;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +182,42 @@ class Room
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getTypelit(): ?Typelit
+    {
+        return $this->typelit;
+    }
+
+    public function setTypelit(?Typelit $typelit): self
+    {
+        $this->typelit = $typelit;
+
+        return $this;
+    }
+
+    public function getHotel(): ?Hotel
+    {
+        return $this->hotel;
+    }
+
+    public function setHotel(?Hotel $hotel): self
+    {
+        $this->hotel = $hotel;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

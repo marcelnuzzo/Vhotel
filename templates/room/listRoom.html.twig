@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste des chambres{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class = "jumbotron" style="background-color:#FEF9F9">
+        <h1><mark>Chambres</mark></h1>
+    </div>  
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>Numéro de la chambre</th>
+            <th>Surface</th>
+            <th>Description</th>
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <th>Statut</th>
+                <th>fichier de l'image</th>
+            {% endif %}
+            <th>Catégorie</th>
+            <th>Type de lit</th>
+            <th>Dans hotel n°</th>
+            <th>Image</th>
+        </tr>
+        {%for room in room %}
+            <tr>
+                <td>{{ room.number }}</td>
+                <td>{{ room.area }}</td>
+                <td>{{ room.description }}</td>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <td>{{ room.status }}</td>
+                    <td>{{ room.imageName }}</td>
+                {% endif %}
+                <td>{{ room.categoryRoom.label }}</td>
+                <td>{{ room.typelit.label }}</td>
+                <td>{{ room.hotel.id }}
+                <td><img src="{{ vich_uploader_asset(room, 'imageFile') }}" alt="{{ room.number }}" width="100" height="auto"/></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

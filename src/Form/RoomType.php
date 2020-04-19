@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Room;
 use App\Entity\CategoryHotel;
 use App\Entity\CategoryRoom;
+use App\Entity\Hotel;
+use App\Entity\Typelit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -20,6 +22,7 @@ class RoomType extends AbstractType
             ->add('number')
             ->add('area')
             ->add('description')
+            ->add('price')
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     'actif' => 'actif',
@@ -32,6 +35,14 @@ class RoomType extends AbstractType
             ->add('categoryRoom', EntityType::class, [
                 'class' => CategoryRoom::class,
                 "choice_label" => 'label'
+            ])
+            ->add('typelit', EntityType::class, [
+                'class' => Typelit::class,
+                'choice_label' => 'label'
+            ])
+            ->add('hotel', EntityType::class, [
+                'class' => Hotel::class,
+                'choice_label' => 'name'
             ])
         ;
     }

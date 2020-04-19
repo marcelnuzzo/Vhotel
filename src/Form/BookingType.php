@@ -13,19 +13,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BookingType extends ApplicationType
 {
+
     private $transformer;
 
-    public function __construct(FrenchToDateTimeTransformer $transformer)
-    {
+    public function __construct(FrenchToDateTimeTransformer $transformer) {
         $this->transformer = $transformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate', TextType::class, $this->getConfiguration("Date d'arrivée", "La date à laquelle vous compter arriver"))
-            ->add('endDate', TextType::class, $this->getConfiguration("Date de départ", "La date à laquelle vous quittez les lieux"))
-            ->add('comment', TextareaType::class, $this->getConfiguration(false, "Si vous voulez laisser un commentaire, n'hésiter pas !", ["required" => false]))
+            ->add('startDate', TextType::class, $this->getConfiguration("Date d'arrivée", "La data  laquelle vous comptez arriver"))
+            ->add('endDate', TextType::class, $this->getConfiguration("Date de départ", "La date  laquelle vous quittez les lieux"))
+            ->add('comment', TextareaType::class, $this->getConfiguration(false, "Si vous avez un ccommentaire, n'hésitez pas à en faire part !", ["required" => false]))
         ;
 
         $builder->get('startDate')->addModelTransformer($this->transformer);
@@ -37,6 +37,10 @@ class BookingType extends ApplicationType
     {
         $resolver->setDefaults([
             'data_class' => Booking::class,
+            'validation_groups' => [
+                'Default',
+                'front'
+            ]
         ]);
     }
 }

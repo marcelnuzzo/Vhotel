@@ -4,8 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\Booking;
+use App\Entity\CategoryHotel;
+use App\Entity\CategoryRoom;
 use App\Entity\Image;
 use App\Entity\Role;
+use App\Entity\Typelit;
 use App\Entity\User;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -22,34 +25,38 @@ class AppFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        $superAdminRole = new Role();
+        $superAdminRole->setTitle('ROLE_SUPER_ADMIN');
+        $manager->persist($superAdminRole);
         $adminRole = new Role();
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
+        $role = new Role();
+        $role->setTitle('ROLE_USER');
+        $manager->persist($role);
 
-        $adminUser = new User();
-        $adminUser->setFirstname('marcel')
+        $superAdminUser = new User();
+        
+        $superAdminUser->setFirstname('marcel')
                   ->setLastname('nuzzo')
                   ->setEmail('nuzzo.marcel@aliceadsl.fr')
                   ->setPicture('https://lh3.googleusercontent.com/a-/AOh14Giy3pomEF4DFzKVvYb03_ATPsjRYypTILMxlnD_=s60-cc-rg')
-                  ->setHash($this->encoder->encodePassword($adminUser, '1234'))
-                  ->addUserRole($adminRole);
-        $manager->persist($adminUser);
+                  ->setHash($this->encoder->encodePassword($superAdminUser, '1234'))
+                  ->addUserRole($superAdminRole)
+                  ->addUserRole($adminRole)
+                  ->addUserRole($role);
+        $manager->persist($superAdminUser);
 
+        $users = [];
+        $users[] = $superAdminUser;
+        $adminUser = $superAdminUser;
+        $user = $superAdminUser;
+        $users[] = $adminUser;
+        $users[] = $user;
+        
         $faker = Factory::create('FR-fr');
         $indiceImage = 200;
         $indiceImage2 = 240;
-
-        $users = [];
-        $user = new User();
-        $hash = $this->encoder->encodePassword($user, '1234');
-        $user->setFirstname('toto')
-             ->setLastname('smith')
-             ->setEmail('toto.smith@gmail.com')
-             ->setHash($hash)
-             ->setPicture('https://lh3.googleusercontent.com/a-/AOh14Giy3pomEF4DFzKVvYb03_ATPsjRYypTILMxlnD_=s60-cc-rg');
-
-        $manager->persist($user);
-        $users[] = $user;
 
         for ($i=1; $i<=30; $i++) {
             $ad = new Ad();
@@ -105,6 +112,47 @@ class AppFixtures extends Fixture
             $manager->persist($ad);
 
         }
+        // liste des catégories d'hotel
+        $catHotel = [
+            '1' => '2 étoiles',
+            '2' => '3 étoiles',
+            '3' => '4 étoiles',
+            '4' => '5 étoiles',
+            '5' => 'Palace'
+        ];
+        foreach ($catHotel as $data) {
+            $catHotel = new CategoryHotel();
+            $catHotel->setLabel($data);
+            $manager->persist($catHotel);
+        }
+
+        //liste des catégories de chambre
+        $catRoom = [
+            '1' => 'Standard',
+            '2' => 'Supérieure',
+            '3' => 'Luxe',
+            '4' => 'Suite'
+        ];
+        foreach ($catRoom as $data) {
+            $catRoom = new CategoryRoom();
+            $catRoom->setLabel($data);
+            $manager->persist($catRoom);
+        }
+
+        //liste des types de lit
+        $typeBed = [
+            '1' => '2 lits simples',
+            '2' => 'Lit double standard Queen Size',
+            '3' => 'Lit double Confort',
+            '4' => 'Lit double King Size',
+            '5' => '1 lit double et un lit simple'
+        ];
+        foreach ($typeBed as $data) {
+            $typeBed = new Typelit();
+            $typeBed->setLabel($data);
+            $manager->persist($typeBed);
+        }
+        
         $manager->flush();
     }
 }

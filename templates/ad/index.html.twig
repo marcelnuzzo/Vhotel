@@ -13,7 +13,7 @@
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-header text-center">
-                        {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro;</strong>
+                        {{ ad.rooms }} chambres, <strong>{{ ad.price | number_format(2, ',', ' ')}}&euro;</strong>
                         <small>Pas encore noté</small>
                     </div>
                     <a href="{{ url }}">

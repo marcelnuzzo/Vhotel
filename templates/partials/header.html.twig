@@ -20,10 +20,14 @@
                 <a class="nav-link" href="{{ path("ads_index") }}">Annonces</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Les listes</a>
                 <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="{{ path("hotel_listHotel") }}">
+                    <i class="fa fa-bed"></i>&nbsp;  Liste hôtels
+                </a>
+                <a class="dropdown-item" href="{{ path("room_listRoom") }}">
+                    <i class="fa fa-bed"></i>&nbsp;Liste chambres
+                </a>
                 <a class="dropdown-item" href="#">Something else here</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Separated link</a>

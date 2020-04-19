@@ -6,10 +6,10 @@ use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdminAdControler extends AbstractController
 {
@@ -76,4 +76,5 @@ class AdminAdControler extends AbstractController
 
         return $this->redirectToRoute('admin_ads_index');
     }
+    
 }

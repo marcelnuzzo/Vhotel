@@ -8,15 +8,18 @@
         <h1>Chambres</h1>
     </div>  
     <a class="btn btn-warning" style="color:white" href="{{ path('app_admin_room_newRoom') }}" role="button" >Créer</a>
-    <table class="table table-striped table-bordered table-hover">
+    <table class="table table-striped table-bordered table-hover mt-3">
         <tr>
             <th>Numéro chambre</th>
             <th>surface</th>
             <th>Description</th>
             <th>Statut</th>
+            <th>Prix/jour</th>
             <th>fichier de l'image</th>
-            <th>Catégorie</th>
             <th>Image</th>
+            <th>Catégorie</th>
+            <th>Type de lit</th>
+            <th>Hôtel</th>
         </tr>
         {%for room in rooms %}
             <tr>
@@ -24,11 +27,13 @@
                 <td>{{ room.area }}</td>
                 <td>{{ room.description }}</td>
                 <td>{{ room.status }}</td>
+                <td>{{ room.price }}</td>
                 <td>{{ room.imageName }}</td>
-                <td>{{ room.categoryRoom.label }}</td>
                 <td><img src="{{ vich_uploader_asset(room, 'imageFile') }}" alt="chambre {{ room.id }}" width="100" height="auto"/></td>
+                <td>{{ room.categoryRoom.label }}</td>
+                <td>{{ room.typelit.label }}</td> 
+                <td>{{ room.hotel.name }}</td>               
                 <td><a class="btn btn-info" style="color:white" href="{{ path('app_admin_room_editRoom', {'id':room.id}) }}" role="button" >Modifier</a></td>
-                <td><a class="btn btn-danger" style="color:white" href="{{ path('admin_room_deleteRoom', {'id':room.id}) }} " role="button" >Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>
