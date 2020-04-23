@@ -1,37 +1,15 @@
-<style>
-    .dropdown-menu {
-        background-color: cyan;
-        color: black;
-    }
-</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
-    <div>
-        <a href="{{ path("admin_index") }}"><i class="fa fa-home fa-3x" aria-hidden="true"></i></a>
-    </div>
-    &nbsp&nbsp&nbsp&nbsp
-    <a class="navbar-brand" href="{{ path("admin_index") }}">ViveHotel</a>
     
-
+    <a href="{{ path("admin_index") }}"><i class="fa fa-home fa-3x" aria-hidden="true"></i></a>
+    <a class="navbar-brand" href="{{ path("admin_index") }}">ViveHotel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
+        <ul class="nav navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fa fa-area-chart"></i>Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("admin_ads_index") }}">
-                    <i class="fa fa-hotel"></i>Annonces
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("admin_admin_listUser") }}">
-                    <i class="fa fa-users"></i>liste des utilisateurs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path("admin_admin_listRole") }}">
-                    <i class="fa fa-users"></i>Liste des roles
                 </a>
             </li>
             <li class="nav-item">
@@ -66,15 +44,8 @@
                     </a>
                 </div>
             </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <!--
-            <li class="nav-item">
-                <a href="{{ path("homepage") }}" target="_blank" class="nav-link">
-                    <i class="fa fa-eye"></i>Voir le site
-                </a>
-            </li>
-            -->
+        </ul> 
+        <ul class="nav navbar-nav navbar-right">
             {% if app.user %}
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDopdownLink">
@@ -93,6 +64,38 @@
         </ul>
     </div>
 </nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path("admin_ads_index") }}">
+                <i class="fa fa-hotel"></i>&nbsp;  Annonces
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path("admin_admin_listUser") }}">
+                <i class="fa fa-users"></i>&nbsp;  liste des utilisateurs
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path("admin_admin_listRole") }}">
+                <i class="fa fa-users"></i>&nbsp;  Liste des roles
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                <i class="fa fa-money"></i>&nbsp;  Liste des tarifs
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 {% for label, messages in app.flashes %}
     <div class="container">
         <div class="alert alert-{{ label }}">

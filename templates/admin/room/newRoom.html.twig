@@ -14,6 +14,60 @@
     </div>
 {% endif %}
 
+<div class="container">
+    <table class="table table-striped table-bordered table-hover mt-3">
+        <thead>
+            <tr>
+                <th colspan="5" style="text-align:center; background-color:pink"><strong>Catégorie de la chambre</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>atégorie de l'hôtel</th>
+                <th>Standard</th>
+                <th>Supérieure</th>
+                <th>Luxe</th>
+                <th>Suite</th>
+            </tr>
+                <tr>
+                    <th scope="col">**</th>
+                    <td>50</td>
+                    <td>60</td>
+                    <td>70</td>
+                    <td>80</td>
+                </tr>
+                <tr>
+                    <th scope="col">***</th>
+                    <td>70</td>
+                    <td>80</td>
+                    <td>90</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <th scope="col">****</th>
+                    <td>85</td>
+                    <td>110</td>
+                    <td>150</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <th scope="col">*****</th>
+                    <td>120</td>
+                    <td>230</td>
+                    <td>999</td>
+                    <td>1500</td>
+                </tr>
+                <tr>
+                    <th scope="col">Palace</th>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>1200</td>
+                    <td>2100</td>
+                </tr>
+        </tbody>    
+    </table>
+</div>
+<hr>
     {{ form_start(form) }}
 <div class="container">
     <div class="row">
@@ -30,6 +84,7 @@
         {{ form_row(form.imageFile) }}
         {{ form_row(form.categoryRoom) }}
         {{ form_row(form.typelit) }}
+        {{ form_row(form.catHotel) }}
         {{ form_row(form.hotel) }}
             <div class=" mx-auto d-block mt-3">
                 <button type="submit" class="btn btn-success">

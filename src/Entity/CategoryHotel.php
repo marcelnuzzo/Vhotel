@@ -28,9 +28,16 @@ class CategoryHotel
      */
     private $hotels;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="catHotel", orphanRemoval=true)
+     */
+    private $catHotel;
+
     public function __construct()
     {
         $this->hotels = new ArrayCollection();
+        $this->catHotel = new ArrayCollection();
+        $this->priceRoom = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,4 +87,36 @@ class CategoryHotel
 
         return $this;
     }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getCatHotel(): Collection
+    {
+        return $this->catHotel;
+    }
+
+    public function addCatHotel(Room $catHotel): self
+    {
+        if (!$this->catHotel->contains($catHotel)) {
+            $this->catHotel[] = $catHotel;
+            $catHotel->setCatHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCatHotel(Room $catHotel): self
+    {
+        if ($this->catHotel->contains($catHotel)) {
+            $this->catHotel->removeElement($catHotel);
+            // set the owning side to null (unless already changed)
+            if ($catHotel->getCatHotel() === $this) {
+                $catHotel->setCatHotel(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

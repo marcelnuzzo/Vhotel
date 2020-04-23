@@ -6,7 +6,8 @@
 
 <div class="container">
     <div class = "jumbotron" style="background-color:#FEF9F9">
-        <h1>Catégories d'hôtels</h1>
+        <h1><mark>Catégories d'hôtels</mark></h1>
+        <br><hr>
         <h2>{{ categoryHotel | length }} catégorie(s).</h2>
     </div>  
     <a class="btn btn-warning" style="color:white" href="{{ path('app_admin_hotel_newCategoryHotel') }}" role="button" >Créer</a>
@@ -18,7 +19,7 @@
             <tr>
                 <td>{{ categoryHotel.label }}</td>
                 <td><a class="btn btn-info" style="color:white" href="{{ path('app_admin_hotel_editCategoryHotel', {'id':categoryHotel.id}) }}" role="button" >Modifier</a></td>
-                <td><a class="btn btn-danger" style="color:white" href="{{ path('hotel_deleteCategoryHotel', {'id':categoryHotel.id}) }} " role="button" >Supprimer</a></td>
+                <td><a class="btn btn-danger" style="color:white" href="{{ path('admin_hotel_deleteCategoryHotel', {'id':categoryHotel.id}) }} " role="button" >Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>

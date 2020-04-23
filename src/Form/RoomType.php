@@ -40,6 +40,10 @@ class RoomType extends AbstractType
                 'class' => Typelit::class,
                 'choice_label' => 'label'
             ])
+            ->add('catHotel', EntityType::class, [
+                'class' => CategoryHotel::class,
+                'choice_label' => 'label'
+            ])
             ->add('hotel', EntityType::class, [
                 'class' => Hotel::class,
                 'choice_label' => 'name'

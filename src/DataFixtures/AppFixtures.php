@@ -7,6 +7,7 @@ use App\Entity\Booking;
 use App\Entity\CategoryHotel;
 use App\Entity\CategoryRoom;
 use App\Entity\Image;
+use App\Entity\Price;
 use App\Entity\Role;
 use App\Entity\Typelit;
 use App\Entity\User;
@@ -25,6 +26,7 @@ class AppFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        
         $superAdminRole = new Role();
         $superAdminRole->setTitle('ROLE_SUPER_ADMIN');
         $manager->persist($superAdminRole);
@@ -112,6 +114,7 @@ class AppFixtures extends Fixture
             $manager->persist($ad);
 
         }
+
         // liste des catégories d'hotel
         $catHotel = [
             '1' => '2 étoiles',
@@ -153,6 +156,35 @@ class AppFixtures extends Fixture
             $manager->persist($typeBed);
         }
         
+/*
+        // gestion des prix par catégories
+        $tabPrice = ['1'=>50,'2'=>60,'3'=>70,'4'=>80,'5'=>70,'6'=>80,'7'=>90,'8'=>100,'9'=>85,'10'=>110,'11'=>150,'12'=>200,'13'=>120,'14'=>230,'15'=>999,'16'=>1500,'17'=>null,'18'=>null,'19'=>1200,'20'=>2100];
+        $categoryHotelRepository = $manager->getRepository('App:CategoryHotel');
+        $categoryRoomRepository = $manager->getRepository('App:CategoryRoom');
+        $catH = 1;
+        $catR = 0;
+       
+        //for($i=1; $i<=20; $i++) {
+
+            $price = new Price();
+            if($catH >= 5)
+                $catH = 1;
+            if($catR >= 4) {
+                $catR = 1;
+                $catH++;
+            } else {
+                $catR++;
+            }
+            
+            $price->setAmount($tabPrice[1])
+                  //->setCatRoom($catRoom->$categoryRoomRepository->find(1))
+                  //->setCatHotel($catHotel->find(1);
+                  ->setCatRoom($categoryRoomRepository->find(1))
+                  ->setCatHotel($categoryHotelRepository->find(1));
+                  
+                  $manager->persist($price);
+        //}
+    */
         $manager->flush();
     }
 }

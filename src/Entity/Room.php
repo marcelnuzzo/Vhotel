@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -41,7 +43,7 @@ class Room
 
     /**
      *
-     * @Vich\UploadableField(mapping="hotel_image", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="room_image", fileNameProperty="imageName")
      * @var File|null
      */
     private $imageFile;
@@ -71,15 +73,26 @@ class Room
     private $typelit;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Hotel", inversedBy="room")
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CategoryHotel", inversedBy="catHotel")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $catHotel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hotel", inversedBy="rooms")
      * @ORM\JoinColumn(nullable=false)
      */
     private $hotel;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $price;
+    public function __construct()
+    {
+        $this->prices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -198,6 +211,30 @@ class Room
         return $this;
     }
 
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCatHotel(): ?CategoryHotel
+    {
+        return $this->catHotel;
+    }
+
+    public function setCatHotel(?CategoryHotel $catHotel): self
+    {
+        $this->catHotel = $catHotel;
+
+        return $this;
+    }
+
     public function getHotel(): ?Hotel
     {
         return $this->hotel;
@@ -210,15 +247,4 @@ class Room
         return $this;
     }
 
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
 }

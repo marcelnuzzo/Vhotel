@@ -31,6 +31,7 @@ class CategoryRoom
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
+        $this->priceCat = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,4 +81,5 @@ class CategoryRoom
 
         return $this;
     }
+
 }

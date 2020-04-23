@@ -72,9 +72,15 @@ class Hotel
      */
     private $room;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="hotel", orphanRemoval=true)
+     */
+    private $rooms;
+
     public function __construct()
     {
         $this->room = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,5 +217,13 @@ class Hotel
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
     }
 }

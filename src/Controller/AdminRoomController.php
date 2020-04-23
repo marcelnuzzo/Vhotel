@@ -3,18 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Room;
+use App\Entity\Price;
 use App\Form\RoomType;
 use App\Entity\Typelit;
 use App\Form\TypelitType;
 use App\Entity\CategoryRoom;
+use App\Service\ListProperty;
 use App\Form\CategoryRoomType;
+use App\Service\ListPricePerDay;
 use App\Repository\RoomRepository;
 use App\Repository\TypelitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryRoomRepository;
+use App\Repository\PriceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+//use App\Service\ListProperty;
 
 class AdminRoomController extends AbstractController
 {
@@ -81,22 +86,26 @@ class AdminRoomController extends AbstractController
     /**
      * @Route("/admin/room/listRoom", name="admin_room_listRoom")
      */
-    public function listRoom(RoomRepository $roomRepository)
+    public function listRoom(RoomRepository $room)
     {
+        
         return $this->render('admin/room/listRoom.html.twig', [
-            'rooms'=> $roomRepository->findAll(),
-            'room' => $roomRepository->findAll(),
+            'rooms'=> $room->findAll(),
+            'room' => $room->findAll(),
         ]);
     }
 
      /**
      * @Route("/admin/room/lisCategorytRoom", name="admin_room_listCategoryRoom")
      */
-    public function listCatRoom(CategoryRoomRepository $categoryRoomRepository)
+    public function listCatRoom(CategoryRoomRepository $categoryRoom, EntityManagerInterface $manager)
     {
+        
+        //$categoryRoomRepository = $manager->getRepository(CategoryRoom::class)->find(1);
+        //dd($categoryRoomRepository);
         return $this->render('admin/room/listCategoryRoom.html.twig', [
-            'categoryRoom'=> $categoryRoomRepository->findAll(),
-            'categoryRooms' => $categoryRoomRepository->findAll(),
+            'categoryRoom'=> $categoryRoom->findAll(),
+            'categoryRooms' => $categoryRoom->findAll(),
         ]);
     }
 
