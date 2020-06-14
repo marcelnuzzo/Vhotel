@@ -61,7 +61,7 @@ class Hotel
     private $updateAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CategoryHotel", inversedBy="hotels")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CategoryHotel", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $categoryHotel;
@@ -77,10 +77,16 @@ class Hotel
      */
     private $rooms;
 
+   /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Service", inversedBy="hotels", cascade={"persist"})
+     */
+    private $services;
+
     public function __construct()
     {
         $this->room = new ArrayCollection();
         $this->rooms = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -225,5 +231,40 @@ class Hotel
     public function getRooms(): Collection
     {
         return $this->rooms;
+    }
+
+     /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+/*
+    public function setServices(Array $services): self
+    {
+        $this->services = $services;
+
+        return $this;
+    }
+*/
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->addHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+            $service->removeHotel($this);
+        }
+
+        return $this;
     }
 }

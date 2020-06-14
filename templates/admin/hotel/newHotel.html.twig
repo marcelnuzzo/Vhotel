@@ -2,6 +2,8 @@
 
 {% block title %}Hôtel{% endblock %}
 
+{% form_theme form 'admin/hotel/_collection.html.twig' %}
+
 {% block body %}
 
 {% if editMode %}
@@ -14,22 +16,18 @@
     </div>
 {% endif %}
 
-    {{ form_start(form) }}
+    {#{{ form_start(form) }}#}
 <div class="container">
     <div class="row">
         <div class="col">
-    
+        {#
         {{ form_row(form.name) }}
         {{ form_row(form.address) }}
         {{ form_row(form.description) }}
         {{ form_row(form.status) }}
-        
-        </div>
-        <div class="col">
-        {{ form_row(form.imageName) }}
-        {{ form_row(form.imageFile) }}
-        {{ form_row(form.categoryHotel) }}
-    
+        #}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
             <div class=" mx-auto d-block mt-3">
                 <button type="submit" class="btn btn-success">
                     {% if editMode %}
@@ -39,9 +37,24 @@
                     {% endif %}
                 </button>
             </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="col">
+        {#
+        {{ form_row(form.imageName) }}
+        {{ form_row(form.imageFile) }}
+        {{ form_row(form.categoryHotel) }}
+        #}
+        {#{{ form_row(form.services) }}#}
         </div>
     </div>
 </div>
-{{ form_end(form) }}
-</div>
+{#{{ form_end(form) }}#}
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="/js/hotel.js"></script>
+
 {% endblock %}

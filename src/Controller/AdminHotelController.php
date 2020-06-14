@@ -6,15 +6,19 @@ use App\Entity\Hotel;
 use App\Form\HotelType;
 use App\Entity\CategoryRoom;
 use App\Entity\CategoryHotel;
+use App\Entity\Service;
 use App\Form\CategoryRoomType;
 use App\Form\CategoryHotelType;
+use App\Form\ServiceType;
 use App\Repository\HotelRepository;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryRoomRepository;
 use App\Repository\CategoryHotelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AdminHotelController extends AbstractController
 {
@@ -41,14 +45,18 @@ class AdminHotelController extends AbstractController
             $route = "admin/hotel/newHotel";
         else if($currentRoute == "app_admin_hotel_editHotel/{id}")
             $route = "admin/hotel/editHotel";
-
+        
         if(!$hotel) {
             $hotel = new Hotel();
         }
         $form = $this->createForm(HotelType::class, $hotel);
         $form->handleRequest($request);
-            
+         
+        
+        
         if($form->isSubmitted() && $form->isValid()) {
+            //$services = $form['services']->getData();
+            //$hotel = $hotel->addService($services);
             if(!$hotel->getId()) {
                 $hotel->setUpdateAt(new \DateTime());
                 $editMode = 0;
@@ -60,8 +68,13 @@ class AdminHotelController extends AbstractController
             $manager->persist($hotel);        
             $manager->flush();
 
+            $this->addFlash(
+                'success',
+                "L'hôtel <strong>{$hotel->getName()}</strong> a bien été créé !"
+            );
+        
             return $this->redirectToRoute('admin_hotel_listHotel');
-        }
+    }
         $html = ".html.twig";
         return $this->render($route.$html, [
             'form' => $form->createView(),
@@ -72,13 +85,14 @@ class AdminHotelController extends AbstractController
      /**
      * @Route("/admin/hotel/editHotel/{id}/deleteHotel", name="admin_hotel_deleteHotel")
      */
-    public function deleteHotel($id, EntityManagerInterface $Manager)
+    public function deleteHotel($id, Hotel $hotel, EntityManagerInterface $manager)
     {
+        
         $repo = $this->getDoctrine()->getRepository(Hotel::class);
         $hotel = $repo->find($id);
 
-        $Manager->remove($hotel);
-        $Manager->flush();
+        $manager->remove($hotel);
+        $manager->flush();
         
         return $this->redirectToRoute('admin_hotel_listHotel');
        
@@ -87,23 +101,27 @@ class AdminHotelController extends AbstractController
      /**
      * @Route("/admin/hotel/listHotel", name="admin_hotel_listHotel")
      */
-    public function list(HotelRepository $hotelRepository)
+    public function listHotel(ServiceRepository $serviceRepo, HotelRepository $hotelRepo, EntityManagerInterface $manager)
     {
+        
         return $this->render('admin/hotel/listHotel.html.twig', [
-            'hotels'=> $hotelRepository->findAll(),
-            'hotel' => $hotelRepository->findAll(),
-        ]);
+            'hotels'=> $hotelRepo->findAll(),
+            'hotel' => $hotelRepo->findAll(),
+            'service' => $serviceRepo->findAll(),
+            'services' => $serviceRepo->findAll(),
+            ]);
     }
 
      /**
      * @Route("/admin/hotel/lisCategorytHotel", name="admin_hotel_listCategoryHotel")
      */
-    public function listCatHotel(CategoryHotelRepository $categoryHotelRepository)
+    public function listCatHotel(CategoryHotelRepository $categoryHotelRepository, EntityManagerInterface $manager)
     {
+        
         return $this->render('admin/hotel/listCategoryHotel.html.twig', [
             'categoryHotel'=> $categoryHotelRepository->findAll(),
             'categoryHotels' => $categoryHotelRepository->findAll(),
-        ]);
+            ]);
     }
 
     /**
@@ -164,76 +182,73 @@ class AdminHotelController extends AbstractController
     }
 
      /**
-     * @Route("/admin/room/lisCategorytRoom", name="admin_room_listCategoryRoom")
+     * @Route("/admin/hotel/listService", name="admin_hotel_listService")
      */
-    /*
-    public function listCatRoom(CategoryRoomRepository $categoryRoomRepository)
+    public function listService(ServiceRepository $repo, EntityManagerInterface $manager)
     {
-        return $this->render('admin/hotel/listCategoryRoom.html.twig', [
-            'categoryRoom'=> $categoryRoomRepository->findAll(),
-            'categoryRooms' => $categoryRoomRepository->findAll(),
-        ]);
+       
+        return $this->render('admin/hotel/listService.html.twig', [
+            'services'=> $repo->findAll(),
+            'service' => $repo->findAll(),
+            ]);
     }
-    */
+
+     /**
+     * @Route("/admin/hotel/editService/{id}/deleteService", name="admin_hotel_deleteService")
+     */
+    public function deleteService($id, Service $service, EntityManagerInterface $manager)
+    {
+        
+        $repo = $this->getDoctrine()->getRepository(ServiceType::class);
+        $service = $repo->find($id);
+
+        $manager->remove($service);
+        $manager->flush();
+        
+        return $this->redirectToRoute('admin_hotel_listService');
+       
+    }
 
     /**
-     * @Route("/admin/hotel/newCategoryRoom", name="app_admin_hotel_newCategoryRoom")
-     * @Route("/admin/hotel/editCategoryRoom/{id}", name="app_admin_hotel_editCategoryRoom")
+     * @Route("/admin/hotel/newService", name="app_admin_hotel_newService")
+     * @Route("/admin/hotel/editService/{id}", name="app_admin_hotel_editService")
      */
-    /*
-    public function formCatRoom(CategoryRoom $categoryRoom = null, Request $request, EntityManagerInterface $manager)
+    public function formService(Service $service = null, Request $request, EntityManagerInterface $manager)
     {
         $currentRoute = $request->attributes->get('_route');
         
-        $route = "admin/hotel/newCategoryRoom";
-        if($currentRoute == "app_admin_hotel_newCategoryRoom")
-            $route = "admin/hotel/newCategoryRoom";
-        else if($currentRoute == "app_admin_hotel_editCategoryRoom/{id}")
-            $route = "admin/hotel/editCategoryRoom";
+        $route = "admin/hotel/newService";
+        if($currentRoute == "app_admin_hotel_newService")
+            $route = "admin/hotel/newService";
+        else if($currentRoute == "app_admin_hotel_editService/{id}")
+            $route = "admin/hotel/editService";
         
-        if(!$categoryRoom) {
-            $categoryRoom = new CategoryRoom();
+        if(!$service) {
+            $service = new Service();
         }
-        $form = $this->createForm(CategoryRoomType::class, $categoryRoom);
+        $form = $this->createForm(ServiceType::class, $service);
         $form->handleRequest($request);
        
         if($form->isSubmitted() && $form->isValid()) {
-            
-            if($categoryRoom->getId() == null) {
+           
+            if($service->getId() == null) {
                 $editMode = 0;      
             }
             else {
                 $editMode = 1;
             }
             
-            $manager->persist($categoryRoom);        
+            $manager->persist($service);        
             $manager->flush();
 
-            return $this->redirectToRoute('admin_hotel_listCategoryRoom');
+            return $this->redirectToRoute('admin_hotel_listService');
         }
         
         $html = ".html.twig";
         return $this->render($route.$html, [
             'form' => $form->createView(),
-            'editMode' => $categoryRoom->getId() !== null
+            'editMode' => $service->getId() !== null
         ]);
     }
-    */
 
-    /**
-     * @Route("/admin/hotel/editCategoryRoom/{id}/deleteCategoryRoom", name="admin_hotel_deleteCategoryRoom")
-     */
-    /*
-    public function deleteCatRoom($id, EntityManagerInterface $Manager)
-    {
-        $repo = $this->getDoctrine()->getRepository(CategoryRoom::class);
-        $categoryRoom = $repo->find($id);
-
-        $Manager->remove($categoryRoom);
-        $Manager->flush();
-        
-        return $this->redirectToRoute('admin_hotel_listCategoryRoom');
-       
-    }
-    */
 }

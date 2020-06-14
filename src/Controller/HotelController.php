@@ -3,54 +3,92 @@
 namespace App\Controller;
 
 use App\Entity\Hotel;
-use App\Form\HotelType;
-use App\Entity\CategoryRoom;
-use App\Entity\CategoryHotel;
-use App\Form\CategoryRoomType;
-use App\Form\CategoryHotelType;
+use App\Form\Hotel1Type;
 use App\Repository\HotelRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\CategoryRoomRepository;
-use App\Repository\CategoryHotelRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/hotel")
+ */
 class HotelController extends AbstractController
 {
     /**
-     * @Route("/hotel", name="hotel")
+     * @Route("/", name="hotel_index", methods={"GET"})
      */
-    public function index()
+    public function index(HotelRepository $hotelRepository): Response
     {
         return $this->render('hotel/index.html.twig', [
-            'controller_name' => 'HotelController',
+            'hotels' => $hotelRepository->findAll(),
         ]);
     }
 
-     /**
-     * @Route("/hotel/listHotel", name="hotel_listHotel")
+    /**
+     * @Route("/new", name="hotel_new", methods={"GET","POST"})
      */
-    public function listHotel(HotelRepository $hotelRepository)
+    public function new(Request $request): Response
     {
-        $hotel = $hotelRepository->findBy([
-            'status' => 'actif'
-        ]);
+        $hotel = new Hotel();
+        $form = $this->createForm(Hotel1Type::class, $hotel);
+        $form->handleRequest($request);
 
-        return $this->render('hotel/listHotel.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($hotel);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('hotel_index');
+        }
+
+        return $this->render('hotel/new.html.twig', [
+            'hotel' => $hotel,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="hotel_show", methods={"GET"})
+     */
+    public function show(Hotel $hotel): Response
+    {
+        return $this->render('hotel/show.html.twig', [
             'hotel' => $hotel,
         ]);
     }
 
-     /**
-     * @Route("/hotel/lisCategorytHotel", name="hotel_listCategoryHotel")
+    /**
+     * @Route("/{id}/edit", name="hotel_edit", methods={"GET","POST"})
      */
-    public function listCatHotel(CategoryHotelRepository $categoryHotelRepository)
+    public function edit(Request $request, Hotel $hotel): Response
     {
-        return $this->render('hotel/listCategoryHotel.html.twig', [
-            'categoryHotel'=> $categoryHotelRepository->findAll(),
-            'categoryHotels' => $categoryHotelRepository->findAll(),
+        $form = $this->createForm(Hotel1Type::class, $hotel);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('hotel_index');
+        }
+
+        return $this->render('hotel/edit.html.twig', [
+            'hotel' => $hotel,
+            'form' => $form->createView(),
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="hotel_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Hotel $hotel): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$hotel->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($hotel);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('hotel_index');
+    }
 }

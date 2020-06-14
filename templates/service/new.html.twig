@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Service{% endblock %}
+
+{% block body %}
+    <h1>Create new Service</h1>
+
+    {{ include('service/_form.html.twig') }}
+   
+{#
+<a href="{{ path('service_index') }}">back to list</a>   
+<div class="container">   
+
+    {{ form_start(form) }}
+    {{ form_row(form.label) }}
+
+    <div class=" mx-auto d-block mt-3">
+        <button type="submit" class="btn btn-success">
+            Créer
+        </button>
+    </div>
+    {{ form_end(form) }}
+</div>
+#}
+{% endblock %}

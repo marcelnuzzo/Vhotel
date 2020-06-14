@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Hotel{% endblock %}
+
+{% block body %}
+    <h1>Create new Hotel</h1>
+
+    {#{{ include('hotel/_form.html.twig') }}#}
+    {#{% include "form/HotelType" %}#}
+     
+<div class="container">   
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {#{{ form_row(form.hotel) }}#}
+
+    <div class=" mx-auto d-block mt-3">
+        <button type="submit" class="btn btn-success">
+            Créer
+        </button>
+    </div>
+    {{ form_end(form) }}
+</div>
+
+    <a href="{{ path('hotel_index') }}">back to list</a>
+{% endblock %}

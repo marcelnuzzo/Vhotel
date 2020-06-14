@@ -6,9 +6,11 @@ use App\Entity\Ad;
 use App\Entity\Booking;
 use App\Entity\CategoryHotel;
 use App\Entity\CategoryRoom;
+use App\Entity\Hotel;
 use App\Entity\Image;
 use App\Entity\Price;
 use App\Entity\Role;
+use App\Entity\Service;
 use App\Entity\Typelit;
 use App\Entity\User;
 use Faker\Factory;
@@ -154,6 +156,14 @@ class AppFixtures extends Fixture
             $typeBed = new Typelit();
             $typeBed->setLabel($data);
             $manager->persist($typeBed);
+        }
+
+        $tabService = ['1'=>'Piscine', '2'=>'Bienêtre', '3'=>'Remise en forme', '4'=>'Thalassothérapie', '5'=>'Tennis', '6'=>'Parking', '7'=>'Animal domestique', '8'=>'Wifi/Internet', '9'=>'Accessibilité personnes à mobilité réduite','10'=>'Garde d\'enfant sur demande','11'=>'Salle de fitness','12'=>'Petit déjeuner'];
+        $service = $tabService[1];
+        foreach($tabService as $data) {
+            $tabService = new Service();
+            $tabService->setLabel($data);
+            $manager->persist($tabService);
         }
         
 /*

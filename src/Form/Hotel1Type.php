@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Hotel;
 use App\Entity\Service;
-use App\Form\ServiceType;
 use App\Entity\CategoryHotel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,9 +11,8 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class HotelType extends AbstractType
+class Hotel1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -35,28 +33,10 @@ class HotelType extends AbstractType
             'class' => CategoryHotel::class,
             "choice_label" => 'label'
         ])
-        
-        /*->add('services', EntityType::class, [
+        ->add('services', EntityType::class, [
             'class' => Service::class,
             'choice_label' => 'label'
         ])
-        */
-        ->add(
-            'services',
-            CollectionType::class,
-            [
-                'entry_type' => ServiceType::class,
-                'allow_add' => true,
-                'allow_delete' => true
-            ]
-        )
-    
-        /*
-        ->add('services', EntityType::class, [
-            'class' => Service::class,
-            "choice_label" => 'label'
-        ])
-        */
         ;
     }
 
